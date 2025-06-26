@@ -1,0 +1,73 @@
+@{
+    ViewData["Title"] = "Giriş Yap";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow">
+                <div class="card-header text-center">
+                    <h4>Giriş Yap</h4>
+                </div>
+                <div class="card-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="userName" class="form-label">Kullanıcı Adı</label>
+                            <input type="text" class="form-control" id="userName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Şifre</label>
+                            <input type="password" class="form-control" id="password" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Giriş Yap</button>
+                        </div>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <p class="mb-0">Hesabınız yok mu? <a href="/Account/Register">Kayıt Ol</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const userName = document.getElementById('userName').value;
+    const password = document.getElementById('password').value;
+    
+    if (!userName || !password) {
+        alert('Lütfen tüm alanları doldurun!');
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userName: userName,
+                password: password
+            })
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            localStorage.setItem('authToken', data.token);
+            window.location.href = '/Todo';
+        } else {
+            const errorData = await response.json();
+            alert('Giriş başarısız: ' + (errorData.errors ? Object.values(errorData.errors).flat().join(', ') : 'Kullanıcı adı veya şifre hatalı'));
+        }
+    } catch (error) {
+        console.error('Login error:', error);
+        alert('Giriş yapılırken bir hata oluştu!');
+    }
+});
+</script> 

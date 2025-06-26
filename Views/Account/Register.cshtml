@@ -1,0 +1,118 @@
+@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow">
+                <div class="card-header text-center">
+                    <h4>Kayıt Ol</h4>
+                </div>
+                <div class="card-body">
+                    <form id="registerForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName" class="form-label">Ad</label>
+                                <input type="text" class="form-control" id="firstName">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="lastName" class="form-label">Soyad</label>
+                                <input type="text" class="form-control" id="lastName">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userName" class="form-label">Kullanıcı Adı</label>
+                            <input type="text" class="form-control" id="userName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">E-posta</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Şifre</label>
+                            <input type="password" class="form-control" id="password" required>
+                            <div class="form-text">En az 6 karakter olmalıdır.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Şifre Tekrar</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">Kayıt Ol</button>
+                        </div>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <p class="mb-0">Zaten hesabınız var mı? <a href="/Account/Login">Giriş Yap</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const userName = document.getElementById('userName').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    if (!userName || !email || !password) {
+        alert('Lütfen zorunlu alanları doldurun!');
+        return;
+    }
+    
+    if (password !== confirmPassword) {
+        alert('Şifreler eşleşmiyor!');
+        return;
+    }
+    
+    if (password.length < 6) {
+        alert('Şifre en az 6 karakter olmalıdır!');
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                firstName: firstName,
+                lastName: lastName,
+                userName: userName,
+                email: email,
+                password: password
+            })
+        });
+        
+        if (response.ok) {
+            alert('Kayıt başarılı! Giriş yapabilirsiniz.');
+            window.location.href = '/Account/Login';
+        } else {
+            const errorData = await response.json();
+            let errorMessage = 'Kayıt başarısız!';
+            
+            if (errorData.errors) {
+                const errors = [];
+                for (const key in errorData.errors) {
+                    errors.push(...errorData.errors[key]);
+                }
+                errorMessage += ' ' + errors.join(', ');
+            }
+            
+            alert(errorMessage);
+        }
+    } catch (error) {
+        console.error('Register error:', error);
+        alert('Kayıt olurken bir hata oluştu!');
+    }
+});
+</script> 

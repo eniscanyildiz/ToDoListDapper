@@ -1,0 +1,98 @@
+@{
+    ViewData["Title"] = "Yapılacaklar Listesi";
+}
+<link rel="stylesheet" href="/css/site.css" />
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Kategoriler</h5>
+                    <button id="add-category-btn" class="btn btn-sm btn-outline-primary">+ Yeni Kategori</button>
+                </div>
+                <div class="card-body">
+                    <div id="categories-list">
+                        <!-- Kategoriler burada dinamik olarak yüklenecek -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Yapılacaklar</h5>
+                    <button id="add-todo-btn" class="btn btn-sm btn-success">+ Yeni Yapılacak</button>
+                </div>
+                <div class="card-body">
+                    <div id="todo-board" class="d-flex flex-row flex-wrap gap-3">
+                        <!-- Yapılacaklar kutuları burada dinamik olarak JS ile yüklenecek -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for adding/editing todo -->
+<div class="modal fade" id="todoModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="todoModalTitle">Yeni Yapılacak</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="todoForm">
+                    <div class="mb-3">
+                        <label for="todoTitle" class="form-label">Başlık</label>
+                        <input type="text" class="form-control" id="todoTitle" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="todoDescription" class="form-label">Açıklama</label>
+                        <textarea class="form-control" id="todoDescription" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="todoCategory" class="form-label">Kategori</label>
+                        <select class="form-control" id="todoCategory">
+                            <option value="">Kategori Seçin</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-primary" id="saveTodoBtn">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for adding category -->
+<div class="modal fade" id="categoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Yeni Kategori</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="categoryForm">
+                    <div class="mb-3">
+                        <label for="categoryName" class="form-label">Kategori Adı</label>
+                        <input type="text" class="form-control" id="categoryName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="categoryColor" class="form-label">Renk</label>
+                        <input type="color" class="form-control" id="categoryColor" value="#007bff">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-primary" id="saveCategoryBtn">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/drag.js"></script> 
