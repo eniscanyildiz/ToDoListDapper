@@ -48,3 +48,10 @@ Bir yapılacaklar (Todo) uygulaması. ASP.NET Core MVC, Identity, JWT authentica
 - Görev ve kategorileri sürükle-bırak ile sırala.
 - Görev satırına tıklayarak düzenle veya sil.
 - Çıkış yapmak için sağ üstteki butonu kullan.
+
+
+<img width="2240" alt="Ekran Resmi 2025-06-26 13 16 17" src="https://github.com/user-attachments/assets/69cd8b3e-ba32-47f6-96c2-346a8521e538" />
+<img width="1062" alt="Ekran Resmi 2025-06-26 13 16 53" src="https://github.com/user-attachments/assets/129693dd-a8ee-471d-b1da-8539c809e2af" />
+<img width="1062" alt="Ekran Resmi 2025-06-26 13 17 00" src="https://github.com/user-attachments/assets/31a7dd20-c2be-4674-89b3-f4ca6e30d947" />
+<img width="2240" alt="Ekran Resmi 2025-06-26 13 17 18" src="https://github.com/user-attachments/assets/c2cde210-edfd-47e0-9acd-0f4202e6edf9" />
+
